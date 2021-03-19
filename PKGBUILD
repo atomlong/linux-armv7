@@ -28,6 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0007-exynos4412-odroid-set-higher-minimum-buck2-regulator.patch'
         '0008-ARM-dove-enable-ethernet-on-D3Plug.patch'
         '0009-USB-Armory-MkII-support.patch'
+		'0010-support-StrawberryPi-zero-board.patch'
         'config'
         'kernel.its'
         'kernel.keyblock'
@@ -47,6 +48,7 @@ md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
          'eef2303908ced1604187ae76cdf2b9d0'
          '56f2d15c883be64c182073744540a7c6'
          '0e76e8e7d3d6c5961cd7276a4df9f3a3'
+		 '80ef397ce1b3d74a9cf45b586acdb688'
          '5102e6401a360fce96c502adf026eff5'
          '4f2379ed84258050edb858ee8d281678'
          '61c5ff73c136ed07a7aadbf58db3d96a'
@@ -74,8 +76,10 @@ prepare() {
   git apply ../0007-exynos4412-odroid-set-higher-minimum-buck2-regulator.patch
   git apply ../0008-ARM-dove-enable-ethernet-on-D3Plug.patch
   git apply ../0009-USB-Armory-MkII-support.patch
+  patch -Np1 -i ../0010-support-StrawberryPi-zero-board.patch
 
-  cat "${srcdir}/config" > ./.config
+  #cat "${srcdir}/config" > ./.config
+  make strawberrypi_zero_defconfig
 
   # add pkgrel to extraversion
   sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
