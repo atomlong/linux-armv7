@@ -58,6 +58,12 @@ md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
          '3e2a512f8da5db5fe9f17875405e56a3')
 
 prepare() {
+  _rncpatch=patch-${rcnver%.0}-${rcnrel}.diff
+  if [[ ! -f "$srcdir/$_rncpatch" ]]; then
+	unlink "$srcdir/$_rncpatch.xz"
+	xz -dc "$startdir/$_rncpatch.xz" > "$_rncpatch"
+  fi
+  
   cd "${srcdir}/${_srcname}"
 
   # add upstream patch
